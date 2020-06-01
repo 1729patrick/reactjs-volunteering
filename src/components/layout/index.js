@@ -1,13 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
-import IconButton from '@material-ui/core/IconButton';
-import Links from './Links';
+import IconButton from "@material-ui/core/IconButton";
+import Links from "./Links";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -18,14 +18,18 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   children: {
-    padding: '110px 50px 50px',
-    height: '100vh',
+    // paddingTop: 64,
+    height: "100vh",
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
   },
 }));
 
 export default function Layout({ children }) {
   const classes = useStyles();
 
+  return <div className={classes.children}>{children}</div>;
   return (
     <>
       <div className={classes.root}>
@@ -38,7 +42,7 @@ export default function Layout({ children }) {
               aria-label="menu"
             ></IconButton>
             <Typography variant="h6" className={classes.title}>
-              Musics
+              IPS - Voluntariado
             </Typography>
             <Links />
           </Toolbar>
