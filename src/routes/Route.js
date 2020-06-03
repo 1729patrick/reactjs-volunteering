@@ -1,10 +1,14 @@
-import React from 'react';
-import Layout from '../components/layout';
+import React from "react";
+import Layout from "../components/layout";
 
-function Route({ component: Component }) {
+function Route({ isPublic, component: Component, ...props }) {
+  if (isPublic) {
+    return <Component {...props} />;
+  }
+
   return (
     <Layout>
-      <Component />
+      <Component {...props} />
     </Layout>
   );
 }
