@@ -15,6 +15,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  button: {
+    marginTop: 15,
+    width: "100%",
   },
 }));
 
@@ -61,8 +66,8 @@ export default function RecipeReviewCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title="Responsável do projeto"
+        subheader="Incrições até 12/02/2020"
       />
       <CardMedia
         className={classes.media}
@@ -71,9 +76,9 @@ export default function RecipeReviewCard() {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          Descrição: This impressive paella is a perfect party dish and a fun
+          meal to cook together with your guests. Add 1 cup of frozen peas along
+          with the mussels, if you like.
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -95,7 +100,24 @@ export default function RecipeReviewCard() {
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent></CardContent>
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <b>Objetivos:</b> This impressive paella is a perfect party dish and
+            a fun meal to cook together with your guests. Add 1 cup of frozen
+            peas along with the mussels, if you like.
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <b>Curso requirido:</b> TI
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={() => {}}
+          >
+            Participar do projeto
+          </Button>
+        </CardContent>
       </Collapse>
     </Card>
   );
