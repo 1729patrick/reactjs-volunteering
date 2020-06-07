@@ -61,11 +61,6 @@ export default function RecipeReviewCard() {
             R
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
         title="Responsável do projeto"
         subheader="Incrições até 12/02/2020"
       />

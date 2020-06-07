@@ -16,15 +16,13 @@ function createData(time, amount) {
 }
 
 const data = [
-  createData("00:00", 0),
-  createData("03:00", 300),
-  createData("06:00", 600),
-  createData("09:00", 800),
-  createData("12:00", 1500),
-  createData("15:00", 2000),
-  createData("18:00", 2400),
-  createData("21:00", 2400),
-  createData("24:00", undefined),
+  createData("Janeiro", 0),
+  createData("Fevereiro", 2),
+  createData("Março", 4),
+  createData("Abril", 1),
+  createData("Maio", 1),
+  createData("Junho", 3),
+  createData("Julho", 5),
 ];
 
 export default function Chart() {
@@ -32,7 +30,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Projetos de voluntáriado</Title>
+      <Title>Projetos participados</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -50,7 +48,7 @@ export default function Chart() {
               position="left"
               style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
             >
-              Sales ($)
+              Projetos
             </Label>
           </YAxis>
           <Line

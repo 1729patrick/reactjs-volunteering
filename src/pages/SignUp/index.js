@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,19 +12,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { withRouter } from "react-router-dom";
+import { toastError } from "../../services/toast";
+import { useUser } from "../../context/UserContext";
+import api from "../../services/api";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,8 +43,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default withRouter(function SignUp({ history }) {
   const classes = useStyles();
+  const [form, setForm] = useState({});
+  const { onSetUser } = useUser();
+
+  const openSignIn = (event) => {
+    event.preventDefault();
+    history.push("/login");
+  };
+
+  const onChange = (field, value) => {
+    setForm({ ...form, [field]: value });
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { firstName, lastName, password, privacy, email } = form;
+
+      const response = (
+        await api.post("/users", {
+          name: `${firstName} ${lastName}`,
+          password,
+          privacy,
+          email,
+        })
+      ).data;
+      onSetUser(response);
+      history.push("/");
+    } catch (e) {
+      toastError("Tente novamente em breve!");
+    }
+  };
 
   return (
     <div className={classes.signup}>
@@ -66,7 +89,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={onSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -78,6 +101,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={({ target }) => onChange("firstName", target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -89,6 +113,7 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  onChange={({ target }) => onChange("lastName", target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,6 +125,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={({ target }) => onChange("email", target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -112,12 +138,19 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={({ target }) => onChange("password", target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
+                    <Checkbox
+                      value="true"
+                      color="primary"
+                      onChange={({ target }) =>
+                        onChange("privacy", target.value)
+                      }
+                    />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
@@ -134,17 +167,14 @@ export default function SignUp() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2" onClick={openSignIn}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </form>
         </div>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
       </Container>
     </div>
   );
-}
+});

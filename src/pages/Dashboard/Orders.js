@@ -7,6 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
+import { withRouter } from "react-router-dom";
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -56,18 +57,20 @@ const rows = [
   ),
 ];
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 const useStyles = makeStyles((theme) => ({
   seeMore: {
     marginTop: theme.spacing(3),
   },
 }));
 
-export default function Orders() {
+export default withRouter(function Orders({ history }) {
   const classes = useStyles();
+
+  const openProjects = (event) => {
+    event.preventDefault();
+    history.push("/projects");
+  };
+
   return (
     <React.Fragment>
       <Title>Projetos disponíveis</Title>
@@ -94,10 +97,10 @@ export default function Orders() {
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
+        <Link color="primary" href="/projects" onClick={openProjects}>
           Ver mais projetos
         </Link>
       </div>
     </React.Fragment>
   );
-}
+});
