@@ -168,9 +168,9 @@ export default withRouter(function Layout({ children, location }) {
             {title}
           </Typography>
           <IconButton color="inherit" onClick={handleClick}>
-            <Badge badgeContent={4} color="secondary">
+            {/* <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
-            </Badge>
+            </Badge> */}
           </IconButton>
           <IconButton color="inherit" onClick={handleClick}>
             <img

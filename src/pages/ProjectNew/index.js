@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -8,11 +8,12 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import AddressForm from "./AddressForm";
-import PaymentForm from "./PaymentForm";
 import Review from "./Review";
+import Details from "./Details";
+import Goals from "./Goals";
+import api from "../../services/api";
+import { toastError } from "../../services/toast";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -59,16 +60,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["Detalhes do projeto", "Objetivos do projeto", "Proposta"];
 
-function getStepContent(step) {
+function getStepContent(step, { setForm, form }) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <Details setForm={setForm} form={form} />;
     case 1:
-      return <PaymentForm />;
+      return <Goals setForm={setForm} form={form} />;
     case 2:
-      return <Review />;
+      return <Review form={form} />;
     default:
       throw new Error("Unknown step");
   }
@@ -77,13 +78,28 @@ function getStepContent(step) {
 export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [form, setForm] = useState({});
 
   const handleNext = () => {
+    if (activeStep === steps.length - 1) {
+      return onSubmit();
+    }
+
     setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+  };
+
+  const onSubmit = async () => {
+    try {
+      const response = (await api.post("/projects", form)).data;
+
+      setActiveStep(activeStep + 1);
+    } catch (e) {
+      toastError("Tente novamente em breve!");
+    }
   };
 
   return (
@@ -119,11 +135,11 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, { setForm, form })}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
-                      Back
+                      Voltar
                     </Button>
                   )}
                   <Button
@@ -132,7 +148,9 @@ export default function Checkout() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    {activeStep === steps.length - 1
+                      ? "Propor projeto"
+                      : "Próximo"}
                   </Button>
                 </div>
               </React.Fragment>

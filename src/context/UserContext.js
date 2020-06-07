@@ -3,14 +3,18 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const loadUserLocal = async () => {
-      const userLocal = await localStorage.getItem("user");
+      const userLocal = localStorage.getItem("user");
+
       if (userLocal) {
         setUser(JSON.parse(userLocal));
       }
+
+      setLoaded(true);
     };
 
     loadUserLocal();
@@ -25,7 +29,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, onSetUser }}>
+    <UserContext.Provider value={{ user, loaded, onSetUser }}>
       {children}
     </UserContext.Provider>
   );

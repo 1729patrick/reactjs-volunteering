@@ -1,0 +1,71 @@
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+
+export default function Details({ form, setForm }) {
+  const onChange = (field, value) => {
+    setForm({ ...form, [field]: value });
+  };
+
+  return (
+    <React.Fragment>
+      <Typography variant="h6" gutterBottom>
+        Detalhes do projeto
+      </Typography>
+      <Grid item xs={12}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label="Título do projeto"
+          name="name"
+          autoFocus
+          onChange={({ target }) => onChange("name", target.value)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label="Resumo do projeto"
+          name="summary"
+          onChange={({ target }) => onChange("summary", target.value)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="Empresas"
+          name="entities"
+          onChange={({ target }) => onChange("entities", target.value)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="Data de inicio"
+          name="start_date"
+          onChange={({ target }) => onChange("start_date", target.value)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="Data final"
+          name="end_date"
+          onChange={({ target }) => onChange("end_date", target.value)}
+        />
+      </Grid>
+    </React.Fragment>
+  );
+}
