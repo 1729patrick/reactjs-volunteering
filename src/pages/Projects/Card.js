@@ -19,8 +19,9 @@ import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "32%",
+    minWidth: "calc(33.3% - 15px)",
     marginBottom: 30,
+    margin: "0 7.5px",
   },
   media: {
     height: 0,
@@ -45,7 +46,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function Project({
+  name,
+  summary,
+  intervation_area,
+  target_audience,
+  observations,
+  entities,
+  owner_name,
+  goals,
+  required_course,
+  end,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -61,19 +73,17 @@ export default function RecipeReviewCard() {
             R
           </Avatar>
         }
-        title="Responsável do projeto"
-        subheader="Incrições até 12/02/2020"
+        title={name}
+        subheader={`Incrições até ${end}`}
       />
       <CardMedia
         className={classes.media}
         image="https://material-ui.com/static/images/cards/paella.jpg"
-        title="Paella dish"
+        title={name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Descrição: This impressive paella is a perfect party dish and a fun
-          meal to cook together with your guests. Add 1 cup of frozen peas along
-          with the mussels, if you like.
+          {summary}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -97,13 +107,21 @@ export default function RecipeReviewCard() {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            <b>Objetivos:</b> This impressive paella is a perfect party dish and
-            a fun meal to cook together with your guests. Add 1 cup of frozen
-            peas along with the mussels, if you like.
+            <b>Objetivos:</b> {goals}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            <b>Curso requirido:</b> TI
+            <b>Curso requirido:</b> {required_course}
           </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <b>Área de intervenção:</b> {intervation_area}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <b>Público alvo:</b> {target_audience}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <b>Observações:</b> {observations}
+          </Typography>
+
           <Button
             variant="contained"
             color="primary"

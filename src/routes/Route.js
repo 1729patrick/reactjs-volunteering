@@ -5,7 +5,6 @@ import { Redirect } from "react-router-dom";
 
 function Route({ isPublic, component: Component, ...props }) {
   const { user, loaded } = useUser();
-  console.log(user);
 
   if (isPublic) {
     return <Component {...props} />;
