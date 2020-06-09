@@ -11,11 +11,12 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Button } from "@material-ui/core";
+import { format } from "date-fns";
+
+import api from "../../services/api";
+import { toastError, toastSuccess } from "../../services/toast";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Project({
+  id,
   name,
   summary,
   intervation_area,
@@ -57,12 +59,28 @@ export default function Project({
   goals,
   required_course,
   end,
+  setReload,
+  start,
 }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(true);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const onAddMember = async () => {
+    try {
+      await api.post("/projectmembers", {
+        privacy: true,
+        project_id: id,
+      });
+
+      setReload((reload) => reload + 1);
+      toastSuccess(`Parabéns! Você está participando do projeto.`);
+    } catch (e) {
+      toastError("Tente novamente em breve!");
+    }
   };
 
   return (
@@ -74,7 +92,7 @@ export default function Project({
           </Avatar>
         }
         title={name}
-        subheader={`Incrições até ${end}`}
+        subheader={`Inscrições até ${format(new Date(end), "dd/MM/yyyy")}`}
       />
       <CardMedia
         className={classes.media}
@@ -82,51 +100,100 @@ export default function Project({
         title={name}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography
+          variant="h5"
+          color="textPrimary"
+          component="h5"
+          style={{ fontSize: 17 }}
+        >
           {summary}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <b>Objetivos:</b> {goals}
+        <CardContent
+          style={{ display: "flex", flexDirection: "column", paddingTop: 0 }}
+        >
+          <Typography variant="subtitle2" component="subtitle2">
+            Objetivos:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {goals}
+            </Typography>
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <b>Curso requirido:</b> {required_course}
+          <Typography variant="subtitle2" component="subtitle2">
+            Curso requirido:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {required_course}
+            </Typography>
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <b>Área de intervenção:</b> {intervation_area}
+          <Typography variant="subtitle2" component="subtitle2">
+            Área de intervenção:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {intervation_area}
+            </Typography>
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <b>Público alvo:</b> {target_audience}
+          <Typography variant="subtitle2" component="subtitle2">
+            Público alvo:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {target_audience}
+            </Typography>
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <b>Observações:</b> {observations}
+          <Typography variant="subtitle2" component="subtitle2">
+            Observações:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {observations}
+            </Typography>
           </Typography>
+          {start && (
+            <Typography variant="subtitle2" component="subtitle2">
+              Data de ínicio:
+              <Typography
+                variant="subtitle1"
+                component="subtitle1"
+                style={{ marginLeft: 5 }}
+              >
+                {format(new Date(start), "dd/MM/yyyy")}
+              </Typography>
+            </Typography>
+          )}
+          {end && (
+            <Typography variant="subtitle2" component="subtitle2">
+              Data Finall:
+              <Typography
+                variant="subtitle1"
+                component="subtitle1"
+                style={{ marginLeft: 5 }}
+              >
+                {format(new Date(end), "dd/MM/yyyy")}
+              </Typography>
+            </Typography>
+          )}
 
           <Button
             variant="contained"
             color="primary"
             className={classes.button}
-            onClick={() => {}}
+            onClick={onAddMember}
           >
             Participar do projeto
           </Button>
