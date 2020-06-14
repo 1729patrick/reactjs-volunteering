@@ -13,7 +13,7 @@ import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { MainListItems, SecondaryListItems } from "./listItems";
+import { MainListItems, SecondaryListItems, ConfigListItems } from "./listItems";
 import { Popover } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 
@@ -191,7 +191,9 @@ export default withRouter(function Layout({ children, location }) {
               horizontal: "right",
             }}
           >
-            The content of the Popover.
+            <List>
+              <ConfigListItems />
+            </List>
           </Popover>
         </Toolbar>
       </AppBar>
