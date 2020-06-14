@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -8,6 +8,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
 import { withRouter } from "react-router-dom";
+import { toastError } from "../../services/toast";
+import { useAux } from "../../context/AuxContext";
+import api from "../../services/api";
+import { format } from "date-fns";
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -65,6 +69,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default withRouter(function Orders({ history }) {
   const classes = useStyles();
+  const [projects, setProjects] = useState([]);
+  const { reload } = useAux();
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = (await api.get("/projects/open")).data;
+
+        setProjects(response?.projects || []);
+      } catch (e) {
+        toastError("Tente novamente em breve!");
+      }
+    };
+
+    fetch();
+  }, [reload]);
 
   const openProjects = (event) => {
     event.preventDefault();
@@ -77,28 +97,34 @@ export default withRouter(function Orders({ history }) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>Title</TableCell>
+            <TableCell>Data inicial</TableCell>
+            <TableCell>Data final</TableCell>
+            <TableCell>Curso requirido</TableCell>
+            <TableCell>Público alvo</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
-            </TableRow>
-          ))}
+          {projects
+            .filter((_, i) => i < 5)
+            .map((project) => (
+              <TableRow key={project.id}>
+                <TableCell>{project.name}</TableCell>
+                <TableCell>
+                  {format(new Date(project.start), "dd/MM/yyyy")}
+                </TableCell>
+                <TableCell>
+                  {format(new Date(project.end), "dd/MM/yyyy")}
+                </TableCell>
+                <TableCell>{project.required_course}</TableCell>
+                <TableCell>{project.target_audience}</TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
         <Link color="primary" href="/projects" onClick={openProjects}>
-          Ver mais projetos
+          Ver projetos
         </Link>
       </div>
     </React.Fragment>

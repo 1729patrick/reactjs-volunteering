@@ -15,6 +15,7 @@ import { withRouter } from "react-router-dom";
 import api from "../../services/api";
 import { toastError } from "../../services/toast";
 import { useUser } from "../../context/UserContext";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {

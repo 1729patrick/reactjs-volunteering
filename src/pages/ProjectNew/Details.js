@@ -11,7 +11,7 @@ export default function Details({ form, setForm }) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Detalhes do projeto
+        Detalhes do Projeto
       </Typography>
       <Grid item xs={12}>
         <TextField
@@ -19,6 +19,7 @@ export default function Details({ form, setForm }) {
           margin="normal"
           required
           fullWidth
+          id="name"
           label="Título do projeto"
           name="name"
           autoFocus
@@ -31,6 +32,7 @@ export default function Details({ form, setForm }) {
           margin="normal"
           required
           fullWidth
+          id="summary"
           label="Resumo do projeto"
           name="summary"
           onChange={({ target }) => onChange("summary", target.value)}
@@ -41,6 +43,7 @@ export default function Details({ form, setForm }) {
           variant="outlined"
           margin="normal"
           fullWidth
+          id="entities"
           label="Empresas"
           name="entities"
           onChange={({ target }) => onChange("entities", target.value)}
@@ -51,6 +54,7 @@ export default function Details({ form, setForm }) {
           variant="outlined"
           margin="normal"
           fullWidth
+          id="start_date"
           label="Data de inicio"
           name="start_date"
           onChange={({ target }) => onChange("start_date", target.value)}
@@ -61,6 +65,7 @@ export default function Details({ form, setForm }) {
           variant="outlined"
           margin="normal"
           fullWidth
+          id="end_date"
           label="Data final"
           name="end_date"
           onChange={({ target }) => onChange("end_date", target.value)}

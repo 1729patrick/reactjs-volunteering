@@ -3,13 +3,9 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { CardMedia, Typography } from "@material-ui/core";
 import { format } from "date-fns";
@@ -27,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TemporaryDrawer({ projects }) {
+export default function TemporaryDrawer({ projects, leaveProject }) {
   const classes = useStyles();
   const [state, setState] = useState(false);
   const [project, setProject] = useState({});
@@ -63,8 +59,12 @@ export default function TemporaryDrawer({ projects }) {
           <Typography
             variant="subtitle2"
             component="subtitle2"
-            style={{ marginTop: 15 }}
+            style={{ margin: "15px 0", color: "#444" }}
           >
+            {project.summary}
+          </Typography>
+
+          <Typography variant="subtitle2" component="subtitle2">
             Objetivos:
             <Typography
               variant="subtitle1"
@@ -138,6 +138,26 @@ export default function TemporaryDrawer({ projects }) {
               </Typography>
             </Typography>
           )}
+        </div>
+        <div
+          style={{
+            width: "100%",
+            marginTop: 50,
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ width: "80%" }}
+            onClick={(e) => {
+              leaveProject(project.id);
+              toggleDrawer(false)(e);
+            }}
+          >
+            Sair do projeto
+          </Button>
         </div>
       </div>
     );

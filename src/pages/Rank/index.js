@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -7,6 +7,9 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import Typography from "@material-ui/core/Typography";
+import { useEffect } from "react";
+import api from "../../services/api";
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,16 +62,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function generate(element) {
-  return [0, 1, 2, 3, 5, 52, 25, 14, 14, 52, 25, 14, 14].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
-
 export default function InteractiveList() {
   const classes = useStyles();
+  const [ranking, setRanking] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = (await api.get("/ranking")).data;
+
+        setRanking(response?.projects || []);
+      } catch (e) {
+        setRanking("Tente novamente em breve!");
+      }
+    };
+
+    fetch();
+  }, []);
+
+  if (!ranking.length) return null;
 
   return (
     <div className={classes.container}>
@@ -80,9 +92,15 @@ export default function InteractiveList() {
             alt="img"
           ></img>
           <ListItemText
-            primary="Single-line item"
-            secondary={"Secondary text"}
+            primary={ranking[1]?.name}
+            secondary={`Participante desde ${format(
+              new Date(ranking[1]?.created_at),
+              "dd/MM/yyyy"
+            )}`}
           />
+          {+ranking[1].count > 1
+            ? `${ranking[1].count} projetos`
+            : `${ranking[1].count} projeto`}
         </div>
 
         <div className={classes.podiumUser}>
@@ -92,9 +110,16 @@ export default function InteractiveList() {
             alt="img"
           ></img>
           <ListItemText
-            primary="Single-line item"
-            secondary={"Secondary text"}
+            primary={ranking[0]?.name}
+            secondary={`Participante desde ${format(
+              new Date(ranking[0]?.created_at),
+              "dd/MM/yyyy"
+            )}`}
           />
+
+          {+ranking[0].count > 1
+            ? `${ranking[0].count} projetos`
+            : `${ranking[0].count} projeto`}
         </div>
 
         <div className={classes.podiumUser}>
@@ -104,13 +129,21 @@ export default function InteractiveList() {
             alt="img"
           ></img>
           <ListItemText
-            primary="Single-line item"
-            secondary={"Secondary text"}
+            primary={ranking[2]?.name}
+            secondary={`Participante desde ${format(
+              new Date(ranking[2]?.created_at),
+              "dd/MM/yyyy"
+            )}`}
           />
+
+          {+ranking[2].count > 1
+            ? `${ranking[2].count} projetos`
+            : `${ranking[2].count} projeto`}
         </div>
       </div>
       <div className={classes.demo}>
         <List>
+<<<<<<< HEAD
           {generate(
             <ListItem>
               <ListItemAvatar>
