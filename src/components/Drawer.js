@@ -128,7 +128,7 @@ export default function TemporaryDrawer({ projects, leaveProject }) {
           )}
           {project.end && (
             <Typography variant="subtitle2" component="subtitle2">
-              Data Finall:
+              Data Final:
               <Typography
                 variant="subtitle1"
                 component="subtitle1"

@@ -11,15 +11,18 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Button } from "@material-ui/core";
+import { format } from "date-fns";
+
+import api from "../../services/api";
+import { toastError, toastSuccess } from "../../services/toast";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "32%",
+    minWidth: "calc(33.3% - 15px)",
     marginBottom: 30,
+    margin: "0 7.5px",
   },
   media: {
     height: 0,
@@ -38,64 +41,164 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  button: {
+    marginTop: 15,
+    flex: 1,
+    margin: 5,
+  },
+  itemProfile: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 15,
+  },
 }));
 
-export default function RecipeReviewCard() {
+export default function Project({
+  id,
+  name,
+  summary,
+  intervation_area,
+  target_audience,
+  observations,
+  is_approved,
+  goals,
+  required_course,
+  end,
+  setApproved,
+  start,
+  updated_at,
+}) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
+          <img
+            className={classes.itemProfile}
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
+          ></img>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={name}
+        subheader={`Inscrições até ${format(new Date(end), "dd/MM/yyyy")}`}
       />
       <CardMedia
         className={classes.media}
         image="https://material-ui.com/static/images/cards/paella.jpg"
-        title="Paella dish"
+        title={name}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+        <Typography
+          variant="h5"
+          color="textPrimary"
+          component="h5"
+          style={{ fontSize: 17 }}
+        >
+          {summary}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+
+      <Collapse in={true} timeout="auto" unmountOnExit>
+        <CardContent
+          style={{ display: "flex", flexDirection: "column", paddingTop: 0 }}
         >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent></CardContent>
+          <Typography variant="subtitle2" component="subtitle2">
+            Objetivos:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {goals}
+            </Typography>
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            Curso requirido:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {required_course}
+            </Typography>
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            Área de intervenção:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {intervation_area}
+            </Typography>
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            Público alvo:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {target_audience}
+            </Typography>
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            Observações:
+            <Typography
+              variant="subtitle1"
+              component="subtitle1"
+              style={{ marginLeft: 5 }}
+            >
+              {observations}
+            </Typography>
+          </Typography>
+          {start && (
+            <Typography variant="subtitle2" component="subtitle2">
+              Data de ínicio:
+              <Typography
+                variant="subtitle1"
+                component="subtitle1"
+                style={{ marginLeft: 5 }}
+              >
+                {format(new Date(start), "dd/MM/yyyy")}
+              </Typography>
+            </Typography>
+          )}
+          {end && (
+            <Typography variant="subtitle2" component="subtitle2">
+              Data Final:
+              <Typography
+                variant="subtitle1"
+                component="subtitle1"
+                style={{ marginLeft: 5 }}
+              >
+                {format(new Date(end), "dd/MM/yyyy")}
+              </Typography>
+            </Typography>
+          )}
+          <span style={{ display: "flex" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              disabled={is_approved}
+              onClick={() => setApproved(true)}
+            >
+              {updated_at && is_approved ? "Aprovado" : "Aprovar"}
+            </Button>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              disabled={updated_at && !is_approved}
+              onClick={() => setApproved(false)}
+            >
+              {updated_at && !is_approved ? "Recusado" : "Recusar"}
+            </Button>
+          </span>
+        </CardContent>
       </Collapse>
     </Card>
   );

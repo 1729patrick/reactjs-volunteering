@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 15,
     width: "100%",
   },
+  itemProfile: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 15,
+  },
 }));
 
 export default function Project({
@@ -87,9 +93,10 @@ export default function Project({
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
+          <img
+            className={classes.itemProfile}
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
+          ></img>
         }
         title={name}
         subheader={`Inscrições até ${format(new Date(end), "dd/MM/yyyy")}`}
@@ -178,7 +185,7 @@ export default function Project({
           )}
           {end && (
             <Typography variant="subtitle2" component="subtitle2">
-              Data Finall:
+              Data Final:
               <Typography
                 variant="subtitle1"
                 component="subtitle1"

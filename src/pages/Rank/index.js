@@ -143,28 +143,6 @@ export default function InteractiveList() {
       </div>
       <div className={classes.demo}>
         <List>
-<<<<<<< HEAD
-          {generate(
-            <ListItem>
-              <ListItemAvatar>
-                <img
-                  className={classes.itemProfile}
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
-                  alt="img"
-                ></img>
-              </ListItemAvatar>
-              <ListItemText
-                primary="Single-line item"
-                secondary={"Secondary text"}
-              />
-              <ListItemSecondaryAction>
-                <Typography variant="h6" className={classes.title}>
-                  150 pontos
-                </Typography>
-              </ListItemSecondaryAction>
-            </ListItem>
-          )}
-=======
           {ranking
             .filter((_, i) => i >= 3)
             .map((user) => (
@@ -191,7 +169,6 @@ export default function InteractiveList() {
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
->>>>>>> 480b783aea33e16a407d2022e8f54e98b99dca44
         </List>
       </div>
     </div>
