@@ -16,8 +16,10 @@ import api from "../../services/api";
 import { toastError, toastSuccess } from "../../services/toast";
 
 import Drawer from "../Drawer";
+import { useUser } from "../../context/UserContext";
 
 export const MainListItems = withRouter(({ history }) => {
+  const { user } = useUser();
   return (
     <div>
       <ListItem
@@ -34,7 +36,9 @@ export const MainListItems = withRouter(({ history }) => {
       <ListItem
         button
         onClick={() => {
-          history.push("/projects");
+          user?.user?.is_admin
+            ? history.push("/projects/approve")
+            : history.push("/projects");
         }}
       >
         <ListItemIcon>

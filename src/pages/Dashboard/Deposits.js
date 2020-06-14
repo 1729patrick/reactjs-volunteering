@@ -6,6 +6,7 @@ import Title from "./Title";
 import { toastError } from "../../services/toast";
 import api from "../../services/api";
 import { useAux } from "../../context/AuxContext";
+import { useUser } from "../../context/UserContext";
 
 function preventDefault(event) {
   event.preventDefault();
@@ -21,6 +22,7 @@ export default function Deposits() {
   const [projects, setProjects] = useState([]);
   const [myProjects, setMyProjects] = useState([]);
   const { reload } = useAux();
+  const { user } = useUser({});
 
   useEffect(() => {
     const fetch = async () => {
@@ -53,18 +55,30 @@ export default function Deposits() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Meus projetos</Title>
+      {user?.user?.is_admin ? (
+        <Title>Projetos avaliados</Title>
+      ) : (
+        <Title>Meus projetos</Title>
+      )}
       <Typography component="p" variant="h4">
-        {myProjects.length}
+        {user?.user?.is_admin
+          ? projects.filter((project) => project.updated_at).length
+          : myProjects.length}
       </Typography>
 
       <span
         style={{ marginTop: 15, paddingTop: 15, borderTop: "1px solid #ddd" }}
       >
-        <Title>Projetos disponíveis</Title>
+        {user?.user?.is_admin ? (
+          <Title>Aguardando validação</Title>
+        ) : (
+          <Title>Projetos disponíveis</Title>
+        )}
       </span>
       <Typography component="p" variant="h4">
-        {projects.length}
+        {user?.user?.is_admin
+          ? projects.filter((project) => !project.updated_at).length
+          : projects.length}
       </Typography>
     </React.Fragment>
   );
