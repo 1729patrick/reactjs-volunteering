@@ -25,7 +25,7 @@ export default function Deposits() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = (await api.get("/projects/all")).data;
+        const response = (await api.get("/projects/open")).data;
 
         setProjects(response?.projects || []);
       } catch (e) {
@@ -61,7 +61,7 @@ export default function Deposits() {
       <span
         style={{ marginTop: 15, paddingTop: 15, borderTop: "1px solid #ddd" }}
       >
-        <Title>Total de projetos</Title>
+        <Title>Projetos disponíveis</Title>
       </span>
       <Typography component="p" variant="h4">
         {projects.length}
