@@ -11,7 +11,7 @@ import ExploreIcon from "@material-ui/icons/Explore";
 import { withRouter } from "react-router-dom";
 import { useAux } from "../../context/AuxContext";
 import api from "../../services/api";
-import { toastError } from "../../services/toast";
+import { toastError, toastSuccess } from "../../services/toast";
 
 import Drawer from "../Drawer";
 
@@ -55,8 +55,8 @@ export const MainListItems = withRouter(({ history }) => {
   );
 });
 
-export const SecondaryListItems = withRouter(({ history }) => {
-  const { reload } = useAux();
+export const SecondaryListItems = withRouter(() => {
+  const { reload, setReload } = useAux();
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -73,6 +73,18 @@ export const SecondaryListItems = withRouter(({ history }) => {
     fetch();
   }, [reload]);
 
+  const leaveProject = async (projectId) => {
+    console.log(projectId);
+    try {
+      await api.delete(`/projectmembers/${projectId}`);
+
+      setReload(reload + 1);
+      toastSuccess("Você deixou de participar do projeto. 😢");
+    } catch (e) {
+      toastError("Tente novamente em breve!");
+    }
+  };
+
   if (!projects.length) {
     return null;
   }
@@ -80,7 +92,7 @@ export const SecondaryListItems = withRouter(({ history }) => {
   return (
     <div>
       <ListSubheader inset>Meus Projetos</ListSubheader>
-      <Drawer projects={projects} />
+      <Drawer projects={projects} leaveProject={leaveProject} />
     </div>
   );
 });
