@@ -6,6 +6,7 @@ import { Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { toastError } from "../../services/toast";
 import api from "../../services/api";
+import { useAux } from "../../context/AuxContext";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Projects = ({ history }) => {
   const [projects, setProjects] = useState([]);
+  const { reload, setReload } = useAux();
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = (await api.get("/projects")).data;
+        const response = (await api.get("/projects/open")).data;
 
         setProjects(response?.projects || []);
       } catch (e) {
@@ -45,7 +47,7 @@ const Projects = ({ history }) => {
     };
 
     fetch();
-  }, []);
+  }, [reload]);
 
   const classes = useStyles();
   return (
@@ -59,8 +61,8 @@ const Projects = ({ history }) => {
         Propor novo projeto
       </Button>
       <span className={classes.cards}>
-        {[...projects, ...projects].map((project) => (
-          <Card key={project.id} {...project} />
+        {projects.map((project) => (
+          <Card key={project.id} {...project} {...{ setReload }} />
         ))}
       </span>
     </div>
