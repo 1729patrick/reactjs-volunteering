@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import PeopleIcon from "@material-ui/icons/People";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import ExploreIcon from "@material-ui/icons/Explore";
 
 import { withRouter } from "react-router-dom";
+import { useAux } from "../../context/AuxContext";
+import api from "../../services/api";
+import { toastError, toastSuccess } from "../../services/toast";
+
+import Drawer from "../Drawer";
 
 export const MainListItems = withRouter(({ history }) => {
   return (
@@ -54,28 +55,44 @@ export const MainListItems = withRouter(({ history }) => {
   );
 });
 
-export const SecondaryListItems = withRouter(({ history }) => {
+export const SecondaryListItems = withRouter(() => {
+  const { reload, setReload } = useAux();
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = (await api.get("/projects/my")).data;
+
+        setProjects(response?.projects || []);
+      } catch (e) {
+        toastError("Tente novamente em breve!");
+      }
+    };
+
+    fetch();
+  }, [reload]);
+
+  const leaveProject = async (projectId) => {
+    console.log(projectId);
+    try {
+      await api.delete(`/projectmembers/${projectId}`);
+
+      setReload(reload + 1);
+      toastSuccess("Você deixou de participar do projeto. 😢");
+    } catch (e) {
+      toastError("Tente novamente em breve!");
+    }
+  };
+
+  if (!projects.length) {
+    return null;
+  }
+
   return (
     <div>
       <ListSubheader inset>Meus Projetos</ListSubheader>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Projeto Árrabida IV" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Liboa em Casa" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Praia mais limpa" />
-      </ListItem>
+      <Drawer projects={projects} leaveProject={leaveProject} />
     </div>
   );
 });

@@ -4,11 +4,14 @@ import App from "./App";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "./context/UserContext";
+import { AuxProvider } from "./context/AuxContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
-      <App />
+      <AuxProvider>
+        <App />
+      </AuxProvider>
     </UserProvider>
     <ToastContainer />
   </React.StrictMode>,
