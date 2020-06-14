@@ -164,6 +164,34 @@ export default function InteractiveList() {
               </ListItemSecondaryAction>
             </ListItem>
           )}
+=======
+          {ranking
+            .filter((_, i) => i >= 3)
+            .map((user) => (
+              <ListItem key={user.id}>
+                <ListItemAvatar>
+                  <img
+                    className={classes.itemProfile}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
+                  ></img>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={user.name}
+                  secondary={`Participante desde ${format(
+                    new Date(user.created_at),
+                    "dd/MM/yyyy"
+                  )}`}
+                />
+                <ListItemSecondaryAction>
+                  <Typography variant="h6" className={classes.title}>
+                    {+user.count > 1
+                      ? `${user.count} projetos`
+                      : `${user.count} projeto`}
+                  </Typography>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+>>>>>>> 480b783aea33e16a407d2022e8f54e98b99dca44
         </List>
       </div>
     </div>
