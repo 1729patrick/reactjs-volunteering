@@ -11,6 +11,9 @@ import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import ExploreIcon from "@material-ui/icons/Explore";
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 
 import { withRouter } from "react-router-dom";
 
@@ -75,6 +78,37 @@ export const SecondaryListItems = withRouter(({ history }) => {
           <AssignmentIcon />
         </ListItemIcon>
         <ListItemText primary="Praia mais limpa" />
+      </ListItem>
+    </div>
+  );
+});
+
+
+export const ConfigListItems = withRouter(({ history }) => {
+  return (
+    <div>
+      <ListItem
+        button
+        onClick={() => {
+          history.push("/config");
+        }}
+      >
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Definições" />
+      </ListItem>
+
+      <ListItem
+        button
+        onClick={() => {
+          history.push("/logout");
+        }}
+      >
+        <ListItemIcon>
+          <ExitToAppIcon />
+        </ListItemIcon>
+        <ListItemText primary="Logout" />
       </ListItem>
     </div>
   );
