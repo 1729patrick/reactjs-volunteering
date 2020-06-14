@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { withRouter } from "react-router-dom";
-import { toastError } from "../../services/toast";
+import { toastError, toastSuccess } from "../../services/toast";
 import { useUser } from "../../context/UserContext";
 import api from "../../services/api";
 
@@ -65,15 +65,23 @@ export default withRouter(function SignUp({ history }) {
         return;
       }
 
-      const response = (
-        await api.put("/users", {
+      await api.put("/users", {
+        name: `${firstName} ${lastName}`,
+        password,
+        email,
+      });
+
+      onSetUser({
+        ...user,
+        user: {
+          ...user.user,
           name: `${firstName} ${lastName}`,
           password,
           email,
-        })
-      ).data;
+        },
+      });
 
-      onSetUser(response);
+      toastSuccess("Dados atualizados com sucesso!");
     } catch (e) {
       toastError("Tente novamente em breve!");
     }
