@@ -30,7 +30,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Projetos participados</Title>
+      <Title>Meu histórico</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
