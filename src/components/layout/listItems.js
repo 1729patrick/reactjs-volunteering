@@ -7,9 +7,8 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import ExploreIcon from "@material-ui/icons/Explore";
-import SettingsIcon from '@material-ui/icons/Settings';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import SettingsIcon from "@material-ui/icons/Settings";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import { withRouter } from "react-router-dom";
 import { useAux } from "../../context/AuxContext";
@@ -100,7 +99,6 @@ export const SecondaryListItems = withRouter(() => {
   );
 });
 
-
 export const ConfigListItems = withRouter(({ history }) => {
   return (
     <div>
@@ -125,7 +123,7 @@ export const ConfigListItems = withRouter(({ history }) => {
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
-        <ListItemText primary="Logout" />
+        <ListItemText primary="Sair" />
       </ListItem>
     </div>
   );
