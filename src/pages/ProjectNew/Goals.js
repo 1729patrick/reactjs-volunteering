@@ -21,6 +21,7 @@ export default function PaymentForm({ form, setForm }) {
             required
             fullWidth
             focused
+            id="goals"
             label="Objetivos"
             name="goals"
             onChange={({ target }) => onChange("goals", target.value)}
@@ -32,6 +33,7 @@ export default function PaymentForm({ form, setForm }) {
             margin="normal"
             required
             fullWidth
+            id="intervation_area"
             label="Área de intervenção"
             name="intervation_area"
             onChange={({ target }) =>
@@ -45,6 +47,7 @@ export default function PaymentForm({ form, setForm }) {
             margin="normal"
             required
             fullWidth
+            id="target_audience"
             label="Público alvo"
             name="target_audience"
             onChange={({ target }) => onChange("target_audience", target.value)}
@@ -55,6 +58,7 @@ export default function PaymentForm({ form, setForm }) {
             variant="outlined"
             margin="normal"
             fullWidth
+            id="required_course"
             label="Curso requerido"
             name="required_course"
             onChange={({ target }) => onChange("required_course", target.value)}
@@ -65,6 +69,7 @@ export default function PaymentForm({ form, setForm }) {
             variant="outlined"
             margin="normal"
             fullWidth
+            id="observations"
             label="Observações"
             name="observations"
             onChange={({ target }) => onChange("observations", target.value)}
