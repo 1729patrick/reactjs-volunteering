@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -7,6 +7,9 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import Typography from "@material-ui/core/Typography";
+import { useEffect } from "react";
+import api from "../../services/api";
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,16 +62,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function generate(element) {
-  return [0, 1, 2, 3, 5, 52, 25, 14, 14, 52, 25, 14, 14].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
-
 export default function InteractiveList() {
   const classes = useStyles();
+  const [ranking, setRanking] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = (await api.get("/ranking")).data;
+
+        setRanking(response?.projects || []);
+      } catch (e) {
+        setRanking("Tente novamente em breve!");
+      }
+    };
+
+    fetch();
+  }, []);
+
+  if (!ranking.length) return null;
 
   return (
     <div className={classes.container}>
@@ -77,56 +89,86 @@ export default function InteractiveList() {
           <img
             className={classes.avatar}
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
+            alt="img"
           ></img>
           <ListItemText
-            primary="Single-line item"
-            secondary={"Secondary text"}
+            primary={ranking[1]?.name}
+            secondary={`Participante desde ${format(
+              new Date(ranking[1]?.created_at),
+              "dd/MM/yyyy"
+            )}`}
           />
+          {+ranking[1].count > 1
+            ? `${ranking[1].count} projetos`
+            : `${ranking[1].count} projeto`}
         </div>
 
         <div className={classes.podiumUser}>
           <img
             className={classes.first}
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
+            alt="img"
           ></img>
           <ListItemText
-            primary="Single-line item"
-            secondary={"Secondary text"}
+            primary={ranking[0]?.name}
+            secondary={`Participante desde ${format(
+              new Date(ranking[0]?.created_at),
+              "dd/MM/yyyy"
+            )}`}
           />
+
+          {+ranking[0].count > 1
+            ? `${ranking[0].count} projetos`
+            : `${ranking[0].count} projeto`}
         </div>
 
         <div className={classes.podiumUser}>
           <img
             className={classes.avatar}
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
+            alt="img"
           ></img>
           <ListItemText
-            primary="Single-line item"
-            secondary={"Secondary text"}
+            primary={ranking[2]?.name}
+            secondary={`Participante desde ${format(
+              new Date(ranking[2]?.created_at),
+              "dd/MM/yyyy"
+            )}`}
           />
+
+          {+ranking[2].count > 1
+            ? `${ranking[2].count} projetos`
+            : `${ranking[2].count} projeto`}
         </div>
       </div>
       <div className={classes.demo}>
         <List>
-          {generate(
-            <ListItem>
-              <ListItemAvatar>
-                <img
-                  className={classes.itemProfile}
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
-                ></img>
-              </ListItemAvatar>
-              <ListItemText
-                primary="Single-line item"
-                secondary={"Secondary text"}
-              />
-              <ListItemSecondaryAction>
-                <Typography variant="h6" className={classes.title}>
-                  150 pontos
-                </Typography>
-              </ListItemSecondaryAction>
-            </ListItem>
-          )}
+          {ranking
+            .filter((_, i) => i >= 3)
+            .map((user) => (
+              <ListItem key={user.id}>
+                <ListItemAvatar>
+                  <img
+                    className={classes.itemProfile}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
+                  ></img>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={user.name}
+                  secondary={`Participante desde ${format(
+                    new Date(user.created_at),
+                    "dd/MM/yyyy"
+                  )}`}
+                />
+                <ListItemSecondaryAction>
+                  <Typography variant="h6" className={classes.title}>
+                    {+user.count > 1
+                      ? `${user.count} projetos`
+                      : `${user.count} projeto`}
+                  </Typography>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
         </List>
       </div>
     </div>

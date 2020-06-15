@@ -87,7 +87,7 @@ export default withRouter(function SignUp({ history }) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Crie sua conta
           </Typography>
           <form className={classes.form} noValidate onSubmit={onSubmit}>
             <Grid container spacing={2}>
@@ -99,7 +99,7 @@ export default withRouter(function SignUp({ history }) {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Nome"
                   autoFocus
                   onChange={({ target }) => onChange("firstName", target.value)}
                 />
@@ -110,7 +110,7 @@ export default withRouter(function SignUp({ history }) {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Sobrenome"
                   name="lastName"
                   autoComplete="lname"
                   onChange={({ target }) => onChange("lastName", target.value)}
@@ -122,7 +122,7 @@ export default withRouter(function SignUp({ history }) {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                   onChange={({ target }) => onChange("email", target.value)}
@@ -134,25 +134,11 @@ export default withRouter(function SignUp({ history }) {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Senha"
                   type="password"
                   id="password"
                   autoComplete="current-password"
                   onChange={({ target }) => onChange("password", target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value="true"
-                      color="primary"
-                      onChange={({ target }) =>
-                        onChange("privacy", target.value)
-                      }
-                    />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
@@ -163,12 +149,12 @@ export default withRouter(function SignUp({ history }) {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              Criar
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2" onClick={openSignIn}>
-                  Already have an account? Sign in
+                  Já possui uma conta? Conecte-se
                 </Link>
               </Grid>
             </Grid>

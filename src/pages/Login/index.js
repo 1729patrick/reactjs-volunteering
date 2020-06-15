@@ -83,7 +83,7 @@ export default withRouter(function SignInSide({ history }) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Acesse sua conta
           </Typography>
           <form className={classes.form} noValidate onSubmit={onSubmit}>
             <TextField
@@ -92,7 +92,7 @@ export default withRouter(function SignInSide({ history }) {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -104,16 +104,13 @@ export default withRouter(function SignInSide({ history }) {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Senha"
               type="password"
               id="password"
               autoComplete="current-password"
               onChange={({ target }) => setPassword(target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -121,17 +118,17 @@ export default withRouter(function SignInSide({ history }) {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Acessar
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  Esqueci minha senha
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2" onClick={openSignUp}>
-                  {"Don't have an account? Sign Up"}
+                  {"Não possui uma conta? Registre-se"}
                 </Link>
               </Grid>
             </Grid>

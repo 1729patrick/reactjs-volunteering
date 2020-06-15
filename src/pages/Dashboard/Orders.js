@@ -12,6 +12,7 @@ import { toastError } from "../../services/toast";
 import { useAux } from "../../context/AuxContext";
 import api from "../../services/api";
 import { format } from "date-fns";
+import { useUser } from "../../context/UserContext";
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -70,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 export default withRouter(function Orders({ history }) {
   const classes = useStyles();
   const [projects, setProjects] = useState([]);
+  const { user } = useUser();
   const { reload } = useAux();
 
   useEffect(() => {
@@ -88,7 +90,9 @@ export default withRouter(function Orders({ history }) {
 
   const openProjects = (event) => {
     event.preventDefault();
-    history.push("/projects");
+    user?.user?.is_admin
+      ? history.push("/projects/approve")
+      : history.push("/projects");
   };
 
   return (

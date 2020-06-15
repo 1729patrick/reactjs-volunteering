@@ -7,6 +7,8 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import ExploreIcon from "@material-ui/icons/Explore";
+import SettingsIcon from "@material-ui/icons/Settings";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import { withRouter } from "react-router-dom";
 import { useAux } from "../../context/AuxContext";
@@ -14,8 +16,10 @@ import api from "../../services/api";
 import { toastError, toastSuccess } from "../../services/toast";
 
 import Drawer from "../Drawer";
+import { useUser } from "../../context/UserContext";
 
 export const MainListItems = withRouter(({ history }) => {
+  const { user } = useUser();
   return (
     <div>
       <ListItem
@@ -32,7 +36,9 @@ export const MainListItems = withRouter(({ history }) => {
       <ListItem
         button
         onClick={() => {
-          history.push("/projects");
+          user?.user?.is_admin
+            ? history.push("/projects/approve")
+            : history.push("/projects");
         }}
       >
         <ListItemIcon>
@@ -93,6 +99,36 @@ export const SecondaryListItems = withRouter(() => {
     <div>
       <ListSubheader inset>Meus Projetos</ListSubheader>
       <Drawer projects={projects} leaveProject={leaveProject} />
+    </div>
+  );
+});
+
+export const ConfigListItems = withRouter(({ history }) => {
+  return (
+    <div>
+      <ListItem
+        button
+        onClick={() => {
+          history.push("/config");
+        }}
+      >
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Definições" />
+      </ListItem>
+
+      <ListItem
+        button
+        onClick={() => {
+          history.push("/logout");
+        }}
+      >
+        <ListItemIcon>
+          <ExitToAppIcon />
+        </ListItemIcon>
+        <ListItemText primary="Sair" />
+      </ListItem>
     </div>
   );
 });

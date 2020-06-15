@@ -13,9 +13,14 @@ import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { MainListItems, SecondaryListItems } from "./listItems";
+import {
+  MainListItems,
+  SecondaryListItems,
+  ConfigListItems,
+} from "./listItems";
 import { Popover } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
 const drawerWidth = 240;
 
@@ -105,6 +110,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default withRouter(function Layout({ children, location }) {
   const classes = useStyles();
+  const { user } = useUser();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -125,7 +131,7 @@ export default withRouter(function Layout({ children, location }) {
   const title = useMemo(() => {
     const { pathname } = location;
     const titles = {
-      "/config": "Configurações",
+      "/config": "Definições",
       "/projects": "Projetos",
       "/rank": "Ranking",
       "/projects/approve": "Aprovação de Projetos",
@@ -167,12 +173,14 @@ export default withRouter(function Layout({ children, location }) {
           >
             {title}
           </Typography>
+          <IconButton color="inherit" onClick={handleClick}></IconButton>
           <IconButton color="inherit" onClick={handleClick}>
-            {/* <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge> */}
-          </IconButton>
-          <IconButton color="inherit" onClick={handleClick}>
+            <div style={{ marginRight: 10, textAlign: "right" }}>
+              <p style={{ fontSize: 17 }}>{user?.user?.name}</p>
+              {user?.user?.is_admin && (
+                <p style={{ fontSize: 15 }}>Administrador</p>
+              )}
+            </div>
             <img
               className={classes.avatar}
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI1pRrpzGWWl2vZy5ceZAQ3o82d7zPnwyaAn_ph5gaIbQcciwf&usqp=CAU"
@@ -191,7 +199,9 @@ export default withRouter(function Layout({ children, location }) {
               horizontal: "right",
             }}
           >
-            The content of the Popover.
+            <List>
+              <ConfigListItems />
+            </List>
           </Popover>
         </Toolbar>
       </AppBar>

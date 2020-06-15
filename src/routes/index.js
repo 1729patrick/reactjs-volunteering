@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 
 import Route from "./Route";
 
@@ -11,6 +11,7 @@ import Projects from "../pages/Projects";
 import Config from "../pages/Config";
 import ProjectNew from "../pages/ProjectNew";
 import ProjectApprove from "../pages/ProjectApprove";
+import Logout from "../pages/Logout";
 
 export default () => {
   return (
@@ -28,7 +29,7 @@ export default () => {
           component={ProjectApprove}
         ></Route>
         <Route path="/config" exact component={Config}></Route>
-        <Route component={Dashboard}></Route>
+        <Route path="/logout" exact component={Logout} isPublic> </Route>
       </Switch>
     </BrowserRouter>
   );
