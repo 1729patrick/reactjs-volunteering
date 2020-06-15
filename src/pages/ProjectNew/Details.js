@@ -3,7 +3,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
+
 export default function Details({ form, setForm }) {
+
   const onChange = (field, value) => {
     setForm({ ...form, [field]: value });
   };
@@ -54,20 +56,27 @@ export default function Details({ form, setForm }) {
           variant="outlined"
           margin="normal"
           fullWidth
+          InputLabelProps={{ shrink: true }}
+          type="date"
           id="start_date"
           label="Data de inicio"
           name="start_date"
+          defaultValue={form.start_date}
           onChange={({ target }) => onChange("start_date", target.value)}
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
           variant="outlined"
+          InputLabelProps={{ shrink: true }}
           margin="normal"
           fullWidth
           id="end_date"
           label="Data final"
+          format={"dd/mm/yyyy"}
+          type="date"
           name="end_date"
+          defaultValue={form.end_date}
           onChange={({ target }) => onChange("end_date", target.value)}
         />
       </Grid>

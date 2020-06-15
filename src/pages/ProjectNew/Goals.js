@@ -2,8 +2,24 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import { MenuItem } from "@material-ui/core";
 
 export default function PaymentForm({ form, setForm }) {
+
+  const interventionAreas = [
+    "Atividades Académicas",
+    "Ambiental",
+    "Apoio a Eventos",
+    "Informática",
+    "Comunicação",
+    "Cultural",
+    "Desporto",
+    "Educação",
+    "Saúde",
+    "Social",
+    "Outra"
+  ]
+
   const onChange = (field, value) => {
     setForm({ ...form, [field]: value });
   };
@@ -33,13 +49,20 @@ export default function PaymentForm({ form, setForm }) {
             margin="normal"
             required
             fullWidth
+            select
             id="intervation_area"
             label="Área de intervenção"
             name="intervation_area"
             onChange={({ target }) =>
               onChange("intervation_area", target.value)
             }
-          />
+          >
+            {interventionAreas.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         <Grid item xs={12}>
           <TextField

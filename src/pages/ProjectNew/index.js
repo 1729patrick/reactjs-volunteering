@@ -94,7 +94,18 @@ export default function Checkout() {
 
   const onSubmit = async () => {
     try {
-      const response = (await api.post("/projects", form)).data;
+      const response = (await api.post("/projects", {
+        name: form.name,
+        summary: form.summary,
+        intervation_area: form.intervation_area,
+        target_audience: form.target_audience,
+        goals: form.goals,
+        required_course: form.required_course,
+        entities: form.entities,
+        observations: form.observations,
+        start: form.start_date,
+        end: form.end_date
+        }).data);
 
       setActiveStep(activeStep + 1);
     } catch (e) {
@@ -125,12 +136,10 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Obrigado por submeter a sua proposta de projeto.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  A sua proposta será avaliada brevemente. Aguarde pelo nosso contacto.
                 </Typography>
               </React.Fragment>
             ) : (
