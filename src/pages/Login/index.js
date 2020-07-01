@@ -179,7 +179,7 @@ export default withRouter(function SignInSide({ history }) {
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2" onClick={openSignUp}>
-                  {"Não possui uma conta? Registre-se"}
+                  {"Quero ser Voluntário"}
                 </Link>
               </Grid>
             </Grid>
