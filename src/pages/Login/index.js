@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,6 +16,7 @@ import api from "../../services/api";
 import { toastError } from "../../services/toast";
 import { useUser } from "../../context/UserContext";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
+import Card from "../Projects/Card";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,10 +49,28 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  projects: {
+    padding: 20,
+  },
+  login: {
+    position: "fixed",
+    top: 0,
+    bottom: 0,
+    right: 0,
+  },
+  cards: {
+    flex: 1,
+    overflowY: "auto",
+    display: "flex",
+    flexWrap: "wrap",
+    height: "calc(100% - 39px)",
+    paddingBottom: 25,
+  },
 }));
 
 export default withRouter(function SignInSide({ history }) {
   const classes = useStyles();
+  const [projects, setProjects] = useState([]);
   const { onSetUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,11 +92,43 @@ export default withRouter(function SignInSide({ history }) {
     }
   };
 
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = (await api.get("public/projects/all")).data;
+
+        setProjects(response?.projects || []);
+      } catch (e) {
+        toastError("Tente novamente em breve!");
+      }
+    };
+
+    fetch();
+  }, []);
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={false} sm={4} md={7}>
+        <Typography component="h1" variant="h5" className={classes.projects}>
+          Projetos disponíveis
+        </Typography>
+        <div className={classes.cards}>
+          {projects.map((project) => (
+            <Card key={project.id} {...project} showEnjoy={false} />
+          ))}
+        </div>
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={6}
+        square
+        className={classes.login}
+      >
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -122,9 +173,9 @@ export default withRouter(function SignInSide({ history }) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                {/* <Link href="#" variant="body2">
                   Esqueci minha senha
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2" onClick={openSignUp}>

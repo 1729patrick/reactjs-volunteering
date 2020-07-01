@@ -65,7 +65,7 @@ export default withRouter(function SignUp({ history }) {
         return;
       }
 
-      await api.put("/users", {
+      await api.put(`/private/users/${user.user.id}`, {
         name: `${firstName} ${lastName}`,
         password,
         email,

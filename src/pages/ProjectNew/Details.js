@@ -3,9 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
-
 export default function Details({ form, setForm }) {
-
   const onChange = (field, value) => {
     setForm({ ...form, [field]: value });
   };
@@ -46,7 +44,7 @@ export default function Details({ form, setForm }) {
           margin="normal"
           fullWidth
           id="entities"
-          label="Empresas"
+          label="Empresa"
           name="entities"
           onChange={({ target }) => onChange("entities", target.value)}
         />

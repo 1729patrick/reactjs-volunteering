@@ -67,6 +67,7 @@ export default function Project({
   end,
   setReload,
   start,
+  showEnjoy = true,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(true);
@@ -196,14 +197,16 @@ export default function Project({
             </Typography>
           )}
 
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={onAddMember}
-          >
-            Participar do projeto
-          </Button>
+          {showEnjoy && (
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={onAddMember}
+            >
+              Participar do projeto
+            </Button>
+          )}
         </CardContent>
       </Collapse>
     </Card>

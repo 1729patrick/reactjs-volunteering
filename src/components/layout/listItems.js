@@ -4,7 +4,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import AssignmentIcon from "@material-ui/icons/Assignment";
+import GroupIcon from "@material-ui/icons/Group";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import ExploreIcon from "@material-ui/icons/Explore";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -15,7 +15,7 @@ import { useAux } from "../../context/AuxContext";
 import api from "../../services/api";
 import { toastError, toastSuccess } from "../../services/toast";
 
-import Drawer from "../Drawer";
+import Drawer from "./Drawer";
 import { useUser } from "../../context/UserContext";
 
 export const MainListItems = withRouter(({ history }) => {
@@ -57,6 +57,19 @@ export const MainListItems = withRouter(({ history }) => {
         </ListItemIcon>
         <ListItemText primary="Ranking" />
       </ListItem>
+      {user?.user?.is_admin && (
+        <ListItem
+          button
+          onClick={() => {
+            history.push("/users");
+          }}
+        >
+          <ListItemIcon>
+            <GroupIcon />
+          </ListItemIcon>
+          <ListItemText primary="Users" />
+        </ListItem>
+      )}
     </div>
   );
 });

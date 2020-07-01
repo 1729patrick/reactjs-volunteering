@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
-
 
 // const products = [
 //   { name: "Product 1", desc: "A nice thing", price: "$9.99" },
@@ -28,7 +27,6 @@ import Grid from "@material-ui/core/Grid";
 //   { name: "Expiry date", detail: "04/2024" },
 // ];
 
-
 const useStyles = makeStyles((theme) => ({
   listItem: {
     padding: theme.spacing(1, 0),
@@ -41,120 +39,74 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-export default function Review({form}) {
+export default function Review({ form }) {
   console.log(form);
   const classes = useStyles();
 
-
   return (
-
     <React.Fragment>
-      <Typography variant="h5">
-        Proposta de Projeto
-      </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Título do Projeto
-            </Typography>
-            <Typography variant="body2">
-              {form.name}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Resumo do Projeto
-            </Typography>
-            <Typography variant="body2">
-              {form.summary}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Empresas
-            </Typography>
-            <Typography variant="body2">
-              {form.entities}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Objetivos
-            </Typography>
-            <Typography variant="body2">
-              {form.goals}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Data de Ínicio
-            </Typography>
-            <Typography variant="body2">
-              {form.start_date}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Data Final
-            </Typography>
-            <Typography variant="body2">
-              {form.end_date}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Área de Intervenção
-            </Typography>
-            <Typography variant="body2">
-              {form.intervation_area}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Público-Alvo
-            </Typography>
-            <Typography variant="body2">
-              {form.target_audience}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Curso Requirido
-            </Typography>
-            <Typography variant="body2">
-              {form.required_course}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle1">
-              Observações
-            </Typography>
-            <Typography variant="body2">
-              {form.observations}
-            </Typography>
-          </Grid>
+      <Typography variant="h5">Proposta de Projeto</Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Título do Projeto</Typography>
+          <Typography variant="body2">{form.name}</Typography>
         </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Resumo do Projeto</Typography>
+          <Typography variant="body2">{form.summary}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Empresa</Typography>
+          <Typography variant="body2">{form.entities}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Objetivos</Typography>
+          <Typography variant="body2">{form.goals}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Data de Ínicio</Typography>
+          <Typography variant="body2">{form.start_date}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Data Final</Typography>
+          <Typography variant="body2">{form.end_date}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Área de Intervenção</Typography>
+          <Typography variant="body2">{form.intervation_area}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Público-Alvo</Typography>
+          <Typography variant="body2">{form.target_audience}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Curso Requirido</Typography>
+          <Typography variant="body2">{form.required_course}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="subtitle1">Observações</Typography>
+          <Typography variant="body2">{form.observations}</Typography>
+        </Grid>
+      </Grid>
     </React.Fragment>
 
     // <React.Fragment>
     //   <Typography variant="h6" gutterBottom>
     //     Proposta de Projeto
     //   </Typography>
-    //     <List>      
+    //     <List>
 
     //       <ListItem>
-    //         <ListItemText primary="Título do Projeto" secondary={form.name}> 
-    //         </ListItemText> 
+    //         <ListItemText primary="Título do Projeto" secondary={form.name}>
+    //         </ListItemText>
     //       </ListItem>
 
     //       <ListItem>
     //         <ListItemText primary="Resumo do Projeto" secondary={form.summary}>
-    //         </ListItemText> 
+    //         </ListItemText>
     //       </ListItem>
-              
-    //       <ListItem>         
+
+    //       <ListItem>
     //         <ListItemText primary="Empresas" secondary={form.entities}>
     //         </ListItemText>
     //       </ListItem>
@@ -184,7 +136,7 @@ export default function Review({form}) {
     //         </ListItemText>
     //       </ListItem>
 
-    //       <ListItem>         
+    //       <ListItem>
     //         <ListItemText primary="Data de Ínicio" secondary={form.start_date}>
     //         </ListItemText>
     //       </ListItem>
@@ -195,8 +147,6 @@ export default function Review({form}) {
     //       </ListItem>
     //     </List>
     // </React.Fragment>
-
-
 
     // <React.Fragment>
     //   <Typography variant="h6" gutterBottom>

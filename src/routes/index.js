@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 import Route from "./Route";
 
@@ -12,6 +12,7 @@ import Config from "../pages/Config";
 import ProjectNew from "../pages/ProjectNew";
 import ProjectApprove from "../pages/ProjectApprove";
 import Logout from "../pages/Logout";
+import Users from "../pages/Users";
 
 export default () => {
   return (
@@ -22,6 +23,7 @@ export default () => {
         <Route path="/signup" exact component={SignUp} isPublic></Route>
         <Route path="/rank" exact component={Rank}></Route>
         <Route path="/projects" exact component={Projects}></Route>
+        <Route path="/users" exact component={Users}></Route>
         <Route path="/projects/new" exact component={ProjectNew}></Route>
         <Route
           path="/projects/approve"
@@ -29,7 +31,9 @@ export default () => {
           component={ProjectApprove}
         ></Route>
         <Route path="/config" exact component={Config}></Route>
-        <Route path="/logout" exact component={Logout} isPublic> </Route>
+        <Route path="/logout" exact component={Logout} isPublic>
+          {" "}
+        </Route>
       </Switch>
     </BrowserRouter>
   );

@@ -80,7 +80,7 @@ export default function InteractiveList() {
     fetch();
   }, []);
 
-  if (!ranking.length) return null;
+  if (ranking.length < 3) return null;
 
   return (
     <div className={classes.container}>
