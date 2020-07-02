@@ -60,8 +60,7 @@ export default function Project({
   intervation_area,
   target_audience,
   observations,
-  entities,
-  owner_name,
+  minWidth,
   goals,
   required_course,
   end,
@@ -91,7 +90,7 @@ export default function Project({
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={minWidth ? { minWidth } : {}}>
       <CardHeader
         avatar={
           <img

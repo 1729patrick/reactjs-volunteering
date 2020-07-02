@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     height: "calc(100% - 39px)",
-    paddingBottom: 25,
+    padding: 20,
   },
 }));
 
@@ -115,7 +115,12 @@ export default withRouter(function SignInSide({ history }) {
         </Typography>
         <div className={classes.cards}>
           {projects.map((project) => (
-            <Card key={project.id} {...project} showEnjoy={false} />
+            <Card
+              key={project.id}
+              {...project}
+              showEnjoy={false}
+              minWidth="calc(50% - 15px)"
+            />
           ))}
         </div>
       </Grid>
